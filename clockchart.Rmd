@@ -2,7 +2,7 @@
 title: "A novel way to visulaize event time data"
 date: "2024-08-19"
 abstract: >
-  Visualization is immensely important in statistical analysis and prediction. It helps in describing the data as well as in choosing the appropriate method of modeling and prediction. So far, however, there is no way to visualize event time data on a clock. In this paper we present a few novel ways to visualize various event time data on chart we call 'Data Clock'. Given events ocurring at various times in a 24-hour day, we show the events on a clock corresponding to the time of event. This makes it more useful to perceive exactly when the events occurred. In addition, we can easily compare the time of the event with other events. Time of events plotted on a clock chart is subtantially more revealing that a bar chart or a pie chart. 
+  Visualization is immensely important in statistical analysis and prediction. It helps in describing the data as well as in choosing the appropriate method of modeling and prediction. So far, however, there is no way to visualize event time data on a clock. In this paper we present a few novel ways to visualize various event time data on chart we call 'Data Clock'. Given events ocurring at various times in a 24-hour day, we show the events on a clock corresponding to the time of event. This makes it more useful to perceive exactly when the events occurred. In addition, we can easily compare the time of the event with other events. Time of events plotted on a clock chart is subtantially more revealing than a bar chart or a pie chart. It can demonstrate around which time events are less or more frequent as well the gap between the events. We also introduce __these functions__. 
 draft: true
 author:  
   - name: Abdullah Al Mahmud

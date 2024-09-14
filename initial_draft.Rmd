@@ -1,6 +1,9 @@
 ---
 title: "A novel way to visulaize event time data"
 date: "`r Sys.Date()`"
+output: 
+  html_document:
+    fig_caption: yes
 author:  
   - name: Abdullah Al Mahmud
 ---
@@ -68,6 +71,7 @@ p <- ggplot2::ggplot(acdt[36:55,],
                                   Temperature.F.))+
   ggplot2::geom_col(width = 0.2)+
   labs(title = "A traditional Line Chart Showing Accidents by Time", 
+       x = "Time",
        y = "Temperature (°F)")
 L2 <- p + ggplot2::theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 L2
@@ -80,8 +84,8 @@ to its clockplot counterpart.
 a. It is hard to discern exactly when an event occurred (or recorded). What we
 observe is just the trend of the temperature.  
 b. It gives us an idea that recordings are placed at equal intervals. Actually,
-the time gap between the first and the second recordings are 20 minutes, while
-the next gap is worth 42 minutes. Thus, any trend, either visual or analytical,
+the time gap between the first and the second recordings is around 8 hours, while
+the next gap is worth 36 minutes only. Thus, any trend, either visual or analytical,
 would be extremely faulty. 
 c. Unlike the clockplot, we cannot single out the duration when there are
 no, less, or large number of occurrences. Occurrences, as we have seen in
@@ -91,6 +95,14 @@ d. When we plot other periods (day, month, year, and so on), they are not
 necessarily cyclic. We get a continuous flow of time, going ahead linearly: 
 year 2015, year 2016, year 2017 etc; no year is repeated. Time data are, 
 however, cyclic; after 24 hours, each hour starts repeating itself. A linear
-line chart fails to reveal this cyclic behavior. 
+line chart fails to reveal this cyclic behavior. As an example, the first and
+second value might represent the end of a day (a cycle) and the start of a 
+new day. A legend may help see this; clockplot still serves the purpose better.
+e. The line chart fails to show that the events are actually clustered around 
+5 AM to 7 AM, as seen in the Figure \ref{fig:acdt20}
+
+```{r acdt20, echo=FALSE}
+clock_chart(data = acdt[36:55,], time = Time)
+```
 
 Need cyclic

@@ -1,0 +1,96 @@
+---
+title: "A novel way to visulaize event time data"
+date: "`r Sys.Date()`"
+author:  
+  - name: Abdullah Al Mahmud
+---
+
+# Abstract
+
+  Visualization is immensely important in statistical analysis and prediction. It helps in describing the data as well as in choosing the appropriate method of modeling and prediction. So far, however, there is no way to visualize event time data on a clock. In this paper we present a few novel ways to visualize various event time data on chart we call 'Data Clock'. Given events ocurring at various times in a 24-hour day, we show the events on a clock corresponding to the time of event. This makes it more useful to perceive exactly when the events occurred. In addition, we can easily compare the time of the event with other events. Time of events plotted on a clock chart is subtantially more revealing than a bar chart or a pie chart. It can demonstrate around which time events are less or more frequent as well the gap between the events. We also introduce __these functions__.
+
+
+# Methodology
+
+Fetch from package "clockchart-construction.Rmd" file. 
+
+# Examples
+
+Let us explore US Accidents data. Although the main focus of these data 
+seem to be on accident times, we cna employ it to visualize the comparison 
+between the existing line chart and our proposed clock chart. 
+
+```{r}
+library(clockplot)
+library(ggplot2)
+acdt <- read.csv("https://raw.githubusercontent.com/mahmudstat/open-analysis/main/data/usacc.csv")
+acdt <- acdt[,c(9:12)]
+head(acdt)
+```
+
+Let us plot temperature against time.
+
+```{r, echo=FALSE}
+p <- ggplot2::ggplot(acdt, ggplot2::aes(Time, Temperature.F.))+
+  ggplot2::geom_col(width = 0.2)+
+  labs(title = "A traditional Line Chart Showing Accidents by Time", 
+       y = "Temperature (°F)")
+p + ggplot2::theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
+
+We have no idea which temperature belongs to which time, although we have 
+changed X- axis labels at right angles (i.e., vertically). 
+
+Now let us take a look into a clock plot. 
+
+```{r}
+clock_chart(data = acdt, time = Time)
+```
+
+Although this is the simplest kind of clock chart that we propose, this still
+makes a lot more sense. We clearly see a huge gap between around 9 PM to 
+around 4:30 AM, during which period no reading of temperature was made (in
+other example, this would mean no event occurred, which is actually relevant to
+this data set as well, which records times of accidents. Why no accidents 
+occurred during this period is subject to further discussion; perhaps, 
+the traffic was less during this time.)
+
+We can easily observe that most incidents occurred from 5 AM to 9 AM. Between 
+other hours, roughly two accidents occurred. 
+
+
+Let us try plotting 20 values only.
+
+
+```{r, echo=FALSE}
+p <- ggplot2::ggplot(acdt[36:55,], 
+                     ggplot2::aes(factor(Time, levels = Time), 
+                                  Temperature.F.))+
+  ggplot2::geom_col(width = 0.2)+
+  labs(title = "A traditional Line Chart Showing Accidents by Time", 
+       y = "Temperature (°F)")
+L2 <- p + ggplot2::theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+L2
+```
+
+When a small number of values are plotted, the line chart becomes much better
+than its previous counterpart. There are, however, several limitations compared
+to its clockplot counterpart.
+
+a. It is hard to discern exactly when an event occurred (or recorded). What we
+observe is just the trend of the temperature.  
+b. It gives us an idea that recordings are placed at equal intervals. Actually,
+the time gap between the first and the second recordings are 20 minutes, while
+the next gap is worth 42 minutes. Thus, any trend, either visual or analytical,
+would be extremely faulty. 
+c. Unlike the clockplot, we cannot single out the duration when there are
+no, less, or large number of occurrences. Occurrences, as we have seen in
+the previous clockplot, may be rare during night and early morning. We, however,
+cannot extract that information from the line chart. 
+d. When we plot other periods (day, month, year, and so on), they are not 
+necessarily cyclic. We get a continuous flow of time, going ahead linearly: 
+year 2015, year 2016, year 2017 etc; no year is repeated. Time data are, 
+however, cyclic; after 24 hours, each hour starts repeating itself. A linear
+line chart fails to reveal this cyclic behavior. 
+
+Need cyclic
